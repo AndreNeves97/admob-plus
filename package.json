@@ -1,118 +1,71 @@
 {
-  "name": "admob-plus-monorepo",
-  "private": true,
+  "name": "cordova-admob-plus",
+  "version": "0.36.0",
+  "description": "Trustable Google AdMob Cordova Plugin",
+  "main": "www/admob.js",
+  "typings": "www/admob.d.ts",
   "scripts": {
-    "test": "run-s test:*",
-    "test:cli": "cd packages/cli && run-s test",
-    "test:jest": "jest",
-    "lint": "tslint --project packages/cordova",
-    "test-android": "run-s test-android:*",
-    "test-android:testbed": "cordova-testbed --platform android --plugin packages/cordova --build-only",
-    "test-android:example": "cd examples/basic && run-s link-plugin && cordova build android",
-    "test-ios": "run-s test-ios:*",
-    "test-ios:testbed": "cordova-testbed --platform ios --plugin packages/cordova --build-only",
-    "test-ios:example": "cd examples/basic && run-s link-plugin && cordova build ios"
+    "prepare": "run-s prepare:*",
+    "prepare:gen": "ts-node scripts/gen",
+    "prepare:build": "rollup -c",
+    "prepare:clean": "del src/.DS_Store src/**/.DS_Store"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "@commitlint/config-lerna-scopes": "^8.3.4",
-    "@commitlint/prompt-cli": "^8.3.5",
-    "@types/jest": "^25.1.2",
-    "@types/yargs": "^15.0.3",
-    "cordova": "9.0.1-nightly.2019.11.10.44afc892",
-    "cordova-testbed": "^0.8.0",
-    "eslint": "^6.8.0",
-    "eslint-config-concise": "^0.37.1",
-    "eslint-config-concise-browser": "^0.37.0",
-    "eslint-config-concise-esnext": "^0.37.0",
-    "eslint-plugin-react": "^7.18.3",
+    "@admob-plus/core": "^0.9.1",
+    "@types/cordova": "^0.0.34",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.7.0",
+    "cordova": "9.0.1-nightly.2019.9.21.1c8ca07f",
+    "del-cli": "^3.0.0",
     "execa": "^4.0.0",
-    "husky": "^4.2.1",
-    "jest": "^25.1.0",
-    "lerna": "^3.20.2",
-    "link-dir": "^2.0.1",
-    "lint-staged": "^10.0.7",
+    "fast-glob": "^3.1.1",
+    "find-cache-dir": "^3.2.0",
+    "lodash": "^4.17.15",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.19.1",
-    "prettier-eslint-cli": "^5.0.0",
-    "prettier-tslint": "^0.4.2",
-    "read-pkg": "^5.2.0",
-    "remark-cli": "^8.0.0",
-    "remark-lint-are-links-valid-duplicate": "^0.2.2",
-    "remark-lint-heading-whitespace": "^1.0.0",
-    "remark-lint-no-empty-sections": "^3.0.0",
-    "remark-lint-no-trailing-spaces": "^2.0.1",
-    "remark-preset-lint-consistent": "^3.0.0",
-    "remark-preset-lint-markdown-style-guide": "^3.0.0",
-    "remark-preset-lint-recommended": "^4.0.0",
-    "replace-in-file": "^6.0.0",
-    "ts-jest": "^25.2.0",
-    "tslint": "^6.0.0",
-    "tslint-config-concise": "^0.37.0",
-    "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.7.5",
-    "yargs": "^15.1.0"
+    "replace-in-file": "^5.0.2",
+    "rollup": "^1.31.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "ts-node": "^8.6.2"
   },
+  "author": "Ratson",
+  "license": "MIT",
   "repository": "admob-plus/admob-plus",
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
+  "homepage": "https://admob-plus.github.io",
+  "files": [
+    "*.ts",
+    "*.md",
+    "*.xml",
+    "src",
+    "ts",
+    "www"
+  ],
+  "keywords": [
+    "cordova",
+    "plugin",
+    "admob",
+    "plus",
+    "ecosystem:cordova",
+    "cordova-plugin-admob",
+    "cordova-admob",
+    "cordova-android",
+    "cordova-ios",
+    "google",
+    "suite",
+    "admob-free",
+    "admobpro"
+  ],
+  "cordova": {
+    "id": "cordova-admob-plus",
+    "platforms": [
+      "android",
+      "ios"
     ]
   },
   "eslintConfig": {
     "extends": [
-      "concise"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "eslint --fix"
-    ],
-    "*.md": "remark --no-stdout",
-    "*.ts": "prettier-tslint fix",
-    "examples/*/package.json": "prettier --write",
-    "packages/cordova/src/ios/*.swift": "swiftlint lint --strict --path"
-  },
-  "remarkConfig": {
-    "plugins": [
-      "remark-preset-lint-recommended",
-      "remark-preset-lint-consistent",
-      "remark-preset-lint-markdown-style-guide",
-      "remark-lint-are-links-valid-duplicate",
-      "remark-lint-heading-whitespace",
-      "remark-lint-no-empty-sections"
-    ]
-  },
-  "workspaces": {
-    "nohoist": [
-      "**/@angular*",
-      "**/@angular*/**",
-      "**/@capacitor/**",
-      "**/@ionic/**",
-      "**/@ionic/app-scripts",
-      "**/@ionic/app-scripts/**",
-      "**/@ionic-native/**",
-      "**/@ionic-native/splash-screen",
-      "**/@ionic-native/status-bar",
-      "**/ionic-angular",
-      "**/ionic-angular/**",
-      "**/ionicons",
-      "**/ionicons/**",
-      "**/cordova-admob-plus",
-      "**/ionic",
-      "**/ionic-admob"
-    ],
-    "packages": [
-      "packages/*",
-      "website"
+      "concise-esnext"
     ]
   }
 }
